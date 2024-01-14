@@ -1,0 +1,135 @@
+CREATE DATABASE LIBRARY;
+USE LIBRARY;
+CREATE TABLE Branch(Branch_no INT PRIMARY KEY, Manager_Id INT , Branch_address VARCHAR(30),Contact_no VARCHAR (20));
+INSERT INTO Branch VALUES 
+    (1, 101, '123 High, Suite 101,ville,USA', '123-456-7890'),
+    (2, 102, '456 Maple, Apt 202,sville,USA', '987-654-3210'),
+    (3, 103, '89 Elm, Unit 303, Village,USA', '345-678-9012'),
+    (4, 104, '101 Oak ,404, Hamlet, Canada', '567-890-1234'),
+    (5, 105, '202 Pine ,r 505, Boroug,Canada', '678-901-2345'),
+    (6, 106, '303 Cedar ,707, Metro, Canada', '234-567-8901'),
+    (8, 108, '505 Redwood,808, Town, Canada', '456-789-0123'),
+    (9, 109, '606 Spruce,Pent 909, UK', '789-012-3456'),
+    (10, 110, '707 Fir Road,1010, UK', '012-345-6789');
+
+SELECT * FROM Branch;
+CREATE TABLE  Employee ( Emp_Id INT PRIMARY KEY ,Emp_name CHAR(10),
+ Position CHAR (10),Salary INT , Branch_no INT,FOREIGN KEY (Branch_no) REFERENCES Branch(Branch_no));
+ 
+INSERT INTO Employee VALUES
+    (1001, 'John', 'Manager', 75000.00, 1),
+    (1002, 'Alice ', 'Sales ', 50000.00, 2),
+    (1003, 'Michael', ' Sales', 45000.00, 3),
+    (1004, 'Emily', 'IT ', 60000.00, 1),
+    (1005, 'Daniel ', 'Account', 65000.00, 2),
+    (1006, 'Sophia ', 'Marketing ', 55000.00, 3),
+    (1007, 'Matthew ', 'HR ', 70000.00, 1),
+    (1008, 'Olivia ', 'Developer', 62000.00, 2),
+    (1009, 'Ethan ', 'Logistics ', 48000.00, 3);
+ 
+ SELECT * FROM Employee;
+ CREATE TABLE Customer( Customer_Id INT PRIMARY KEY, Customer_name CHAR (10) , Customer_address VARCHAR (50),
+Reg_date DATE);
+
+INSERT INTO Customer VALUES 
+(11, 'Alice','ain Street, Cityville, USA', '2022-01-01'),
+   (12, 'Bob ', '456 Elm Avenue, Townsville, USA', '2022-01-02'),
+   (13, ' Brown', '789 Oak Lane, Villageton, USA', '2022-01-03'),
+   (14, ' Wilson', '101 Pine Road, Hamletsville, USA', '2022-01-04'),
+  (15, ' Davis', '202 Maple Court, Boroughburg, USA', '2022-01-05'),
+   (16, ' Miller', '303 Cedar Drive, Settlement City, USA', '2022-01-06'),
+  (17, ' Jones', '404 Birch Street, Metropolis, USA', '2022-01-07'),
+ ( 18, ' Taylor', '505 Redwood Lane, Township, USA', '2022-01-08'),
+   (19, ' Martinez', '606 Spruce Avenue, Districtville, USA', '2022-01-09');
+    
+SELECT * FROM Customer;
+
+CREATE TABLE Books (ISBN VARCHAR(300) PRIMARY KEY,Book_title VARCHAR(15),
+Category VARCHAR(30),Rental_Price DECIMAL(10,2),Status VARCHAR(5) CHECK (Status IN ('YES','NO')),
+Author VARCHAR(20),Publisher VARCHAR(20));
+
+INSERT INTO Books VALUES
+('978-0123', 'The Art', 'Programming', 15.99, 'Yes','John Smith', 'XYZ Publications'),
+    ('978-023', 'Data Science ', 'Data Science', 18.99, 'Yes','Alice Johnson', 'ABC Books'),
+    ('978-034', 'Mystery ', 'Mystery', 12.99, 'Yes', 'Michael Brown', '123 Publishers'),
+    ('978-04', 'History', 'History', 14.99, 'No','Emily Davis', 'Book World'),
+    ('978-056', 'Cooking ', 'Cooking', 20.99, 'Yes','Daniel Wilson', 'Global Press'),
+    ('978-06', 'Space ', 'Science Fiction', 16.99, 'No','John Smith', 'XYZ Publications'),
+    ('978-078', 'Art ant',' Art', 22.99, 'Yes','Emily Davis', 'Book World'),
+    ('978-089', 'Financial ', 'Finance', 19.99, 'No','Daniel Wilson', 'Global Press'),
+    ('978-0901', 'Healthy ', 'Health', 17.99, 'Yes','Michael Brown', '123 Publishers'),
+    ('978-012', 'Travel ', 'Travel', 24.99, 'No','Daniel Wilson', 'Global Press');
+
+SELECT * FROM Books;
+
+CREATE TABLE  IssueStatus( Issue_Id INT PRIMARY KEY , Issued_cust INT, FOREIGN KEY (Issued_cust) REFERENCES 
+CUSTOMER(customer_Id),Issued_book_name CHAR(200) , Issue_date DATE ,Isbn_book char(10),
+ FOREIGN KEY (Isbn_book) REFERENCES BOOKS(ISBN));
+
+INSERT INTO IssueStatus VALUES
+     (1,11, 'The Art of Programming', '2022-01-01', '978-0123'),
+    (2,12, 'Data Science Essentials', '2022-01-02', '978-023'),
+    (3,13, 'Mystery at Midnight', '2022-01-03', '978-034'),
+    (4,14, 'History Uncovered', '2022-01-04', '978-04'),
+    (5,15, 'Cooking Adventures', '2022-01-05', '978-056'),
+    (6,16, 'Space Explorers', '2022-01-06', '978-06'),
+    (7,17, 'Art and Creativity', '2022-01-07', '978-078'),
+    (8,18, 'Financial Freedom', '2022-01-08', '978-089'),
+    (9,19, 'Healthy Living', '2022-01-09', '978-0901');
+
+ CREATE TABLE ReturnStatus ( Return_Id INT PRIMARY KEY , Return_cust INT , Return_book_name CHAR(10),
+Return_date DATE , Isbn_book2 VARCHAR (20) , FOREIGN KEY(Isbn_book2) REFERENCES Books(ISBN)); 
+
+SELECT * FROM IssueStatus;
+
+INSERT INTO  ReturnStatus VALUES
+    (1, 1, ' Programmg', '2022-02-01', '978-0123'),
+    (2, 2, ' Science ', '2022-02-02', '978-023'),
+    (3, 3, ' Midnight', '2022-02-03', '978-034'),
+    (4, 4, ' Uncovered', '2022-02-04', '978-04'),
+    (5, 5, ' Advents', '2022-02-05', '978-056'),
+    (6, 6, 'Space ', '2022-02-06', '978-06'),
+    (7, 7, ' Creatty', '2022-02-07', '978-078'),
+    (8, 8, ' Freedom', '2022-02-08', '978-089'),
+    (9, 9, 'Healthy ', '2022-02-09', '978-0901');
+    
+SELECT * FROM ReturnStatus;
+
+#1. Retrieve the book title, category, and rental price of all available books
+SELECT Book_title,Category, Rental_Price FROM Books;
+
+#2. List the employee names and their respective salaries in descendingorder of salary
+
+SELECT Emp_name, Salary FROM Employee ORDER BY Salary DESC;
+
+#Retrieve the book titles and the corresponding customers who haveissued those books.
+
+SELECT  IssueStatus.Issued_book_name AS Book_Title, Customer.Customer_name FROM  IssueStatus JOIN Customer ON  IssueStatus. Issued_cust = Customer.Customer_Id;
+
+# 4. Display the total count of books in each category
+
+SELECT Category,COUNT(*) AS number_count FROM Books GROUP BY Category;
+
+#5. Retrieve the employee names and their positions for the employeeswhose salaries are above Rs.50,000
+
+SELECT  Emp_name ,Position FROM Employee WHERE Salary > 50000;
+
+#6. List the customer names who registered before 2022-02-12 and havenot issued any books yet
+
+SELECT Customer_name FROM Customer WHERE Reg_date < '2022-01-03' AND customer_Id NOT IN (SELECT Issued_cust FROM IssueStatus);
+
+#7.Display the branch numbers and the total count of employees in eachbranch
+
+SELECT Branch_no, COUNT(*) AS Total_Employees_Count FROM Employee GROUP BY Branch_no;
+
+#Display the names of customers who have issued books in the monthof Jan2022
+
+SELECT Customer.Customer_name FROM Customer JOIN IssueStatus ON Customer.Customer_ID = IssueStatus.Issued_cust WHERE YEAR(IssueStatus.Issue_date) = 2022 AND  MONTH(IssueStatus.Issue_date) = 01;
+
+#9. Retrieve book_title from book table containing history.
+
+SELECT Book_title FROM Books WHERE Category='History';
+
+# Retrieve the branch numbers along with the count of employeesfor branches having more than2employees
+
+SELECT Branch_no , count(*) AS COUNT_MPLOYEE FROM Employee GROUP BY Branch_no HAVING  COUNT(*) > 2;
